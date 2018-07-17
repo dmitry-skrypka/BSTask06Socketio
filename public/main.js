@@ -166,12 +166,14 @@
     function addUser(user) {
 
         user.username = encodeHTML(user.username);
+        user.name = encodeHTML(user.name);
 
 
         var html = `
             <li>
                 <div class="user">
                     <span class="name">${user.username}</span>
+                    <span class="name">${user.name}</span>
               
                 </div>
                 
@@ -185,13 +187,13 @@
     function singlUser(user) {
 
         user.username = encodeHTML(user.username);
-
+        user.name = encodeHTML(user.name);
 
         var html = `
             <li>
                 <div class="user">
                     <span class="name">${user.username}</span>
-              
+               <span class="name">${user.name}</span>
                 </div>
                 
             </li>`;

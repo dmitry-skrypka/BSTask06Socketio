@@ -17,7 +17,10 @@ io.on('connection', (socket) => {
     socket.on('newUser', (obj) => {
 
 
-        UserModel.findOneAndUpdate({username: obj.username}, obj.name, {new: true, upsert: true}, function (err, user) {
+        UserModel.findOneAndUpdate({username: obj.username, name: obj.name}, obj.name, {
+            new: true,
+            upsert: true
+        }, function (err, user) {
             socket.to('all').emit("global", user);
             socket.to('all').emit("addUser", user);
         });
@@ -62,7 +65,7 @@ io.on('connection', (socket) => {
 
 
                     socket.emit("history", messages.reverse());
-                    console.log(messages)
+                    // console.log(messages)
                 }
             })
 
