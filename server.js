@@ -82,6 +82,7 @@ io.on('connection', (socket) => {
             username: user,
             status: 'nottyping'
         };
+
         socket.to('all').emit("userIsTyping", typer)
     })
 
