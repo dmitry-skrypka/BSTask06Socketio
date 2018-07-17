@@ -85,7 +85,12 @@ io.on('connection', (socket) => {
 
         socket.to('all').emit("userIsTyping", typer)
     })
+    socket.on('userleft', () => {
+        let user = socket.username;
 
+        socket.to('all').emit("userleft", user)
+        console.log(user)
+    })
 });
 
 http.listen(7777, () => {

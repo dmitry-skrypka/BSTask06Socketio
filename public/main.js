@@ -31,6 +31,7 @@
     socket.on('message', addMessage);
     socket.on('global', global);
     socket.on('userIsTyping', userIsTyping);
+    socket.on('userleft', gone);
 
 
     $loginBtn.click(function () {
@@ -56,7 +57,7 @@
         let html = `
             <li>
                
-                <div class="message my-message" dir="auto">${message.username} Joined</div>
+                <div class="message my-message" dir="auto">${message.username} Has joined the Chat</div>
             </li>`;
 
         $(html).hide().appendTo('.chat-history ul').slideDown(200);
@@ -121,7 +122,11 @@
             onKeyDownNotEnter()
         }
     });
-
+    $('#disconnect').click(function () {
+        socket.emit('userleft');
+        socket.disconnect();
+        location.reload();
+    });
 
     socket.on('history', messages => {
         for (let message of messages) {
@@ -217,6 +222,22 @@
 
     const cleanInput = (input) => {
         return $('<div/>').text(input).html();
+    }
+
+
+    function gone(message) {
+        message.username = encodeHTML(message.username);
+
+
+        let html = `
+            <li>
+               
+                <div class="message my-message" dir="auto">${message} Has left</div>
+            </li>`;
+
+        $(html).hide().appendTo('.chat-history ul').slideDown(200);
+
+        $(".chat-history").animate({scrollTop: $('.chat-history')[0].scrollHeight}, 1000);
     }
 
 })();
