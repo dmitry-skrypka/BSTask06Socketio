@@ -6,27 +6,20 @@
         $loginBtn = $('.loginBtn'),
         $usernameInput = $('#username'),
         $nameInput = $('#name');
+    let typing = false;
+    let timeout = undefined;
 
-
-    var socket = io();
-
+    let socket = io();
     const setUsername = () => {
         user = {
             username: cleanInput($usernameInput.val().trim()),
             name: cleanInput($nameInput.val().trim()),
-
         };
-
-
         if (user.username) {
-
-
             socket.emit('newUser', user);
             console.log(user)
         }
     };
-
-
     socket.on('login', () => {
         $loginPage.fadeOut();
         $chatPage.show();
@@ -41,40 +34,26 @@
 
 
     $loginBtn.click(function () {
-
         setUsername()
-
-
     });
 
 
     function userIsTyping(message) {
-
         let statusarea = document.getElementById('status');
-
         message.username = encodeHTML(message.username);
         status = encodeHTML(message.status);
-
         if (status == 'typing') {
-
-
             statusarea.innerHTML = message.username + " is " + message.status
-
-
         } else {
             statusarea.innerHTML = '';
-
         }
-
-
     }
 
     function global(message) {
-
         message.username = encodeHTML(message.username);
 
 
-        var html = `
+        let html = `
             <li>
                
                 <div class="message my-message" dir="auto">${message.username} Joined</div>
@@ -169,7 +148,7 @@
         user.name = encodeHTML(user.name);
 
 
-        var html = `
+        let html = `
             <li>
                 <div class="user">
                     <span class="name">${user.username}</span>
@@ -189,7 +168,7 @@
         user.username = encodeHTML(user.username);
         user.name = encodeHTML(user.name);
 
-        var html = `
+        let html = `
             <li>
                 <div class="user">
                     <span class="name">${user.username}</span>
@@ -203,9 +182,6 @@
         $(".chat-users").animate({scrollTop: $('.chat-users')[0].scrollHeight}, 1000);
     }
 
-
-    var typing = false;
-    var timeout = undefined;
 
     function timeoutFunction() {
         typing = false;
